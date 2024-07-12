@@ -22,7 +22,7 @@ export function useMainContract() {
     const mainContract = useAsyncInitialize(async () => {
         if (!client) return;
         const contract = new MainContract(
-            Address.parse("EQCwtpLoqmNtMQdVkIl4mZEr3wuiqhwRLU6GHAeYJlSyyv_R"),
+            Address.parse("EQANWhq3cGLI8xeuyGuG5xf8Uuga3TV3KGtruTj_MoLNWoIZ"),
             { code: Cell.EMPTY, data: Cell.EMPTY}
         );
         return client.open(contract) as OpenedContract<MainContract>;
@@ -52,6 +52,12 @@ export function useMainContract() {
         contract_balance: fromNano(balance),
         sendIncrement: async () => {
             return mainContract?.sendIncrement(sender, toNano("0.05"), 3);
+        },
+        sendDeposit: async () => {
+            return mainContract?.sendDeposit(sender, toNano(1))
+        },
+        sendWithdrawalRequest: async () => {
+            return mainContract?.sendWithdrawalRequest(sender, toNano("0.05"), toNano("0.7"))
         }
     };
 }
